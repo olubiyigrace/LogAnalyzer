@@ -14,12 +14,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LogParser {
-
     private static final Pattern LOG_PATTERN =
             Pattern.compile("\\[(INFO|ERROR|WARNING)]\\s+(\\d{4}-\\d{2}-\\d{2})\\s+(.*)");
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    // Parse a single line into a LogEntry
     public static Optional<LogEntry> parseLine(String line) {
         Matcher matcher = LOG_PATTERN.matcher(line);
         if (matcher.matches()) {
@@ -28,12 +26,11 @@ public class LogParser {
             String message = matcher.group(3);
             return Optional.of(new LogEntry(level, date, message));
         }
-        return Optional.empty(); // malformed line
+        return Optional.empty();
     }
 
-    // Read file and return list of LogEntry objects
     public static List<LogEntry> parseFile(String filePath) throws IOException {
-        List<LogEntry> parsedLogs = new ArrayList<>();
+        List<LogEntry> parsedLogs = new ArrayList<LogEntry>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {

@@ -1,4 +1,4 @@
-package com.grazac.loganalyzer.exporter;
+package com.grazac.loganalyzer.summary;
 
 import com.grazac.loganalyzer.model.LogEntry;
 import com.grazac.loganalyzer.service.LogAnalyzerService;
@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
-public class Summary{
+public class SummaryExporter {
 
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -21,7 +21,7 @@ public class Summary{
             writer.write("ERROR logs: " + service.countLevelLogs("ERROR") + "\n");
             writer.write("WARNING logs: " + service.countLevelLogs("WARNING") + "\n\n");
 
-            writer.write("=== Logs Grouped by Date (Descending) ===\n");
+            writer.write("=== Logs Grouped by Date ===\n");
             Map<java.time.LocalDate, java.util.List<LogEntry>> grouped = service.groupLogsByDateDesc();
             for (var entry : grouped.entrySet()) {
                 writer.write("Date: " + entry.getKey().format(DATE_FORMATTER) + "\n");

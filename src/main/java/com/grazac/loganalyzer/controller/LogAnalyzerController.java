@@ -1,35 +1,37 @@
 package com.grazac.loganalyzer.controller;
 
-import com.grazac.loganalyzer.model.LogEntry;
 import com.grazac.loganalyzer.service.LogAnalyzerService;
+import com.grazac.loganalyzer.util.ResponseBuilder;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/logs")
+@RequiredArgsConstructor
 public class LogAnalyzerController {
-
     private final LogAnalyzerService service;
-
-    public LogAnalyzerController(LogAnalyzerService service) {
-        this.service = service;
-    }
+    private final ResponseBuilder responseBuilder;
 
     @GetMapping("/summary")
-    public Map<String, Long> getSummary() {
-        return Map.of(
-                "total", service.countTotalLogs(),
-                "INFO", service.countLevelLogs("INFO"),
-                "ERROR", service.countLevelLogs("ERROR"),
-                "WARNING", service.countLevelLogs("WARNING")
+    public ResponseEntity<?> getSummary() {
+        var summary = Map.of(
+                "Total Logs", service.countTotalLogs(),
+                "INFO Logs", service.countLevelLogs("INFO"),
+                "ERROR Logs", service.countLevelLogs("ERROR"),
+                "WARNING Logs", service.countLevelLogs("WARNING")
         );
+        return responseBuilder.buildResponse(true, "Log summary retrieved successfully!", HttpStatus.OK, summary);
     }
 
     @GetMapping("/by-date/{date}")
-    public List<LogEntry> getLogsByDate(@PathVariable String date) {
-        return service.filterByDate(LocalDate.parse(date));
+    public ResponseEntity<?> getLogsByDate(@PathVariable String date) {
+        var requestedDate = service.filterByDate(LocalDate.parse(date));
+
+        return responseBuilder.buildResponse(true, "Logs of " + date + " retrieved successfully", HttpStatus.OK, requestedDate);
     }
 }

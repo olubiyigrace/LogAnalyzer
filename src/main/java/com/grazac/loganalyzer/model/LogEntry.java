@@ -1,27 +1,15 @@
 package com.grazac.loganalyzer.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import java.time.LocalDate;
 
+@Getter
+@AllArgsConstructor
+
 public class LogEntry {
-    private final String level; // INFO or ERROR
+    private final String level;
     private final LocalDate date;
     private final String message;
-
-    public LogEntry(String level, LocalDate date, String message) {
-        this.level = level;
-        this.date = date;
-        this.message = message;
-    }
-
-    public String getLevel() {
-        return level;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public String getMessage() {
-        return message;
-    }
 }

@@ -1,5 +1,5 @@
 # Log Analyzer API
-A Spring Boot-based backend application that processes raw log files and converts them into meaningful insights such as log counts, filtering, and grouped summaries.
+A SpringBoot-based backend application that processes raw log files and converts them into meaningful insights such as log counts, filtering, and grouped summaries.
 
 ## Features
 1. Count total logs
@@ -17,7 +17,7 @@ A Spring Boot-based backend application that processes raw log files and convert
 * Java
 * Spring Boot
 * Spring Web
-* Java NIO (File Handling)
+* Java IO (File Handling)
 * BufferedReader (for reading log files)
 * Postman (API documentation)
 
@@ -39,8 +39,8 @@ loganalyzer/
 │                       ├── controller/                 # API layer
 │                       ├── service/                    # Business logic
 │                       ├── model/                      # Data models (LogEntry)
-│                       ├── util/                       # Helpers (LogParser)
-│                       └── exporter/                   # Export logic (SummaryExporter)
+│                       ├── util/                       # Helpers (LogParser, ResponseBuilder)
+│                       └── summary/                   # Export logic (SummaryExporter)
 ```
 
 

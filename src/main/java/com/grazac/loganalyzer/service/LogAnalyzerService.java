@@ -10,10 +10,11 @@ import java.util.stream.Collectors;
 @Service
 public class LogAnalyzerService {
 
-    private final List<LogEntry> logs = new ArrayList<>();
+    private final List<LogEntry> logs = new ArrayList<>(2_000_000);
 
     public void addLogs(List<LogEntry> newLogs) {
-        if (newLogs != null) logs.addAll(newLogs);
+        if (newLogs != null)
+            logs.addAll(newLogs);
     }
 
     public long countTotalLogs() {
@@ -26,34 +27,21 @@ public class LogAnalyzerService {
                 .count();
     }
 
-    // Group logs by date in ascending order (original)
-    public Map<LocalDate, List<LogEntry>> groupLogsByDate() {
-        return logs.stream()
-                .collect(Collectors.groupingBy(LogEntry::getDate));
-    }
-
-    // Group logs by date in descending order (new)
     public Map<LocalDate, List<LogEntry>> groupLogsByDateDesc() {
-        Map<LocalDate, List<LogEntry>> grouped = logs.stream()
+        Map<LocalDate, List<LogEntry>> groupedLogs = logs.stream()
                 .collect(Collectors.groupingBy(LogEntry::getDate));
 
-        return grouped.entrySet().stream()
-                .sorted((e1, e2) -> e2.getKey().compareTo(e1.getKey())) // descending
+        return groupedLogs.entrySet().stream()
+                .sorted((entry1, entry2) -> entry2.getKey().compareTo(entry1.getKey()))
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
                         Map.Entry::getValue,
-                        (e1, e2) -> e1,
-                        LinkedHashMap::new
-                ));
+                        (entry1, entry2) -> entry1, LinkedHashMap::new));
     }
 
     public List<LogEntry> filterByDate(LocalDate date) {
         return logs.stream()
                 .filter(log -> log.getDate().equals(date))
                 .collect(Collectors.toList());
-    }
-
-    public void clearLogs() {
-        logs.clear();
     }
 }
