@@ -21,7 +21,7 @@ public class SummaryExporter {
             writer.write("ERROR logs: " + service.countLevelLogs("ERROR") + "\n");
             writer.write("WARNING logs: " + service.countLevelLogs("WARNING") + "\n\n");
 
-            writer.write("=== Logs Grouped by Date ===\n");
+            writer.write("==================== LOGS GROUPED BY DATE =======================\n");
             Map<java.time.LocalDate, java.util.List<LogEntry>> grouped = service.groupLogsByDateDesc();
             for (var entry : grouped.entrySet()) {
                 writer.write("Date: " + entry.getKey().format(DATE_FORMATTER) + "\n");

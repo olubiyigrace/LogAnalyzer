@@ -1,6 +1,7 @@
 package com.grazac.loganalyzer.util;
 
 import com.grazac.loganalyzer.model.LogEntry;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -13,12 +14,13 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Component
 public class LogParser {
     private static final Pattern LOG_PATTERN =
             Pattern.compile("\\[(INFO|ERROR|WARNING)]\\s+(\\d{4}-\\d{2}-\\d{2})\\s+(.*)");
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    public static Optional<LogEntry> parseLine(String line) {
+    public Optional<LogEntry> parseLine(String line) {
         Matcher matcher = LOG_PATTERN.matcher(line);
         if (matcher.matches()) {
             String level = matcher.group(1);
@@ -29,7 +31,7 @@ public class LogParser {
         return Optional.empty();
     }
 
-    public static List<LogEntry> parseFile(String filePath) throws IOException {
+    public List<LogEntry> parseFile(String filePath) throws IOException {
         List<LogEntry> parsedLogs = new ArrayList<LogEntry>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;

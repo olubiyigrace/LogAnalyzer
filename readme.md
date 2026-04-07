@@ -1,5 +1,5 @@
 # Log Analyzer API
-A SpringBoot-based backend application that processes raw log files and converts them into meaningful insights such as log counts, filtering, and grouped summaries.
+A Java application that processes raw log files and converts them into meaningful insights such as log counts, filtering, and grouped summaries.
 
 ## Features
 1. Count total logs
@@ -16,7 +16,6 @@ A SpringBoot-based backend application that processes raw log files and converts
 ## Tech Stack
 * Java
 * Spring Boot
-* Spring Web
 * Java IO (File Handling)
 * BufferedReader (for reading log files)
 * Postman (API documentation)
@@ -47,11 +46,11 @@ loganalyzer/
 
 ## How It Works
 * The application expects logs in the following format: 
-  -   [LEVEL]  yyyy-MM-dd  Message 
+  - [LEVEL]  yyyy-MM-dd  Message 
   - Example:
-    - [INFO] User registered
-    - [ERROR] Payment failed
-    - [WARNING] High memory usage
+    - [INFO] 2026-02-02 User registered
+    - [ERROR] 2026-03-01 Payment failed
+    - [WARNING] 2026-01-27 High memory usage
 * The application reads a log file using BufferedReader. Each line is parsed using a regex pattern.
 * Data is converted into LogEntry objects
 * Logs are processed to generate:
@@ -60,26 +59,18 @@ loganalyzer/
     - Grouped summaries
 
 ## API Endpoints
-1. Summary (Grouped)
+1. Logs
+GET /api/logs/all
+
+2. Summary (Grouped)
 GET /api/logs/summary
-Returns:
-- Total logs
-- INFO count
-- ERROR count
-- WARNING count
-2. Filter Logs by Date
+
+3. Filter Logs by Date
 GET /api/logs/{date}
 
 ## API Documentation
 The API is fully documented using Postman. 
 * 🔗 View Documentation: https://documenter.getpostman.com/view/52630284/2sBXinHW3y
-
-## Key Concepts Used
-* Regex pattern matching
-* File streaming with BufferedReader
-* Optional handling
-* Aggregation and grouping
-* REST API design
 
 
 
