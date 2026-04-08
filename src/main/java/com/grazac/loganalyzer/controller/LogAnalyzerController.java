@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @RestController
@@ -20,13 +20,13 @@ public class LogAnalyzerController {
 
     @GetMapping("/all")
     public ResponseEntity<?> getAllLogs() {
-        var parsedLogs = logAnalyzerService.getLogs();
-        return responseBuilder.buildResponse(true, "Logs retrieved successfully!", HttpStatus.OK, parsedLogs);
-
+        var allParsedLogs = logAnalyzerService.getLogs();
+        return responseBuilder.buildResponse(true, "Logs retrieved successfully!", HttpStatus.OK, allParsedLogs);
     }
+
     @GetMapping("/summary")
     public ResponseEntity<?> getSummary() {
-            var summary = new HashMap<>();
+            var summary = new LinkedHashMap<>();
             for (String level : List.of("INFO", "ERROR", "WARNING")) {
                 summary.put(level, logAnalyzerService.countLevelLogs(level));
             }
