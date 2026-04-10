@@ -3,6 +3,7 @@ package com.grazac.loganalyzer;
 import com.grazac.loganalyzer.service.LogAnalyzerService;
 import com.grazac.loganalyzer.summary.SummaryExporter;
 import lombok.RequiredArgsConstructor;
+import org.jspecify.annotations.NonNull;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,7 +18,7 @@ public class LogAnalyzerApplication implements CommandLineRunner {
 	}
 
 	@Override
-	public void run(String... args) throws Exception {
+	public void run(String @NonNull ... args) throws Exception {
 
 
 		System.out.println("\n========================= LOG SUMMARY =========================");

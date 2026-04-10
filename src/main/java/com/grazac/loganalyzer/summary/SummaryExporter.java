@@ -6,7 +6,9 @@ import com.grazac.loganalyzer.service.LogAnalyzerService;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Map;
 
 public class SummaryExporter {
@@ -22,7 +24,7 @@ public class SummaryExporter {
             writer.write("WARNING logs: " + service.countLevelLogs("WARNING") + "\n\n");
 
             writer.write("==================== LOGS GROUPED BY DATE =======================\n");
-            Map<java.time.LocalDate, java.util.List<LogEntry>> grouped = service.groupLogsByDateDesc();
+            Map<LocalDate, List<LogEntry>> grouped = service.groupLogsByDateDesc();
             for (var entry : grouped.entrySet()) {
                 writer.write("Date: " + entry.getKey().format(DATE_FORMATTER) + "\n");
                 for (LogEntry log : entry.getValue()) {
